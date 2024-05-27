@@ -9,9 +9,10 @@ export const addBrand = async (req, res) => {
     }
     //check brand exists
     const brandName = req.body.brand;
-    console.log(brandName);
+    const brandEmail = req.body.email;
+    console.log(brandName,brandEmail);
     const brandExist = await Brand.findOne({ brandName });
-    if (brandExist) {
+    if (brandExist || brandEmail) {
       return res.status(400).json({
         success: false,
         message: "Brand already exist",

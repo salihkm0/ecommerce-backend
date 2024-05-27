@@ -1,27 +1,27 @@
 import mongoose from "mongoose";
 import slug from "mongoose-slug-generator";
 
-const options = {
-  separator: "-",
-  lang: "en",
-  truncate: 120,
-};
+// const options = {
+//   separator: "-",
+//   lang: "en",
+//   truncate: 120,
+// };
 
-mongoose.plugin(slug, options);
+mongoose.plugin(slug);
 
 const sizeSchema = new mongoose.Schema({
   size: { type: String, required: true },
   quantity: { type: Number, required: true },
 });
 
-const mainCategory = new mongoose.Schema({
-  name: { type: String, required: true },
-  // slug: { type: String, slug: "name", unique: true },
-  description: {
-    type: String,
-    trim: true,
-  },
-});
+// const mainCategory = new mongoose.Schema({
+//   name: { type: String, required: true },
+//   // slug: { type: String, slug: "name", unique: true },
+//   description: {
+//     type: String,
+//     trim: true,
+//   },
+// });
 const productSchema = new mongoose.Schema(
   {
     sku: {
@@ -36,11 +36,11 @@ const productSchema = new mongoose.Schema(
       slug: "title",
       unique: true,
     },
-    imageUrl: [
-      {
-        type: String,
-      },
-    ],
+    // imageUrl: [
+    //   {
+    //     type: String,
+    //   },
+    // ],
     // imageKey: {
     //   type: String,
     // },
@@ -61,7 +61,9 @@ const productSchema = new mongoose.Schema(
     offer: {
       type: {
         type: String,
-        enum: ["percentage", "price"],
+        enum: ["percentage", "amount"],
+        default: "percentage",
+
       },
       value: Number,
     },
@@ -69,10 +71,10 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    isStock: {
-      type: Boolean,
-      default: true,
-    },
+    // isStock: {
+    //   type: Boolean,
+    //   default: true,
+    // },
     isFeatured: {
       type: Boolean,
       default: false,
@@ -82,8 +84,10 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
     category: {
-      type: mainCategory,
+    //   type: mainCategory,
+    type : String,
       required: true,
+      enum : ["men" ,'women','kids']
     },
     subCategory: {
       type: mongoose.Schema.Types.ObjectId,

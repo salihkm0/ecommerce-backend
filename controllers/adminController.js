@@ -2,7 +2,6 @@ import bcrypt from "bcrypt";
 import Admin from "../models/adminModel.js";
 import { adminToken } from "../utils/adminToken.js";
 
-
 //! admin signup
 export const signup = async (req, res) => {
   console.log("Admin signup hitted");
@@ -53,8 +52,11 @@ export const signup = async (req, res) => {
       message: "Signed successfully!",
       success: true,
       user: newAdmin,
+      token: token,
     });
-    console.log("token : ", token);
+    console.log("token : ", token, {
+      httpOnly: true,
+    });
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).json({
@@ -63,7 +65,6 @@ export const signup = async (req, res) => {
     });
   }
 };
-
 
 //! admin signin
 export const signin = async (req, res) => {
@@ -81,26 +82,32 @@ export const signin = async (req, res) => {
     const admin = await Admin.findOne({ email });
     console.log(admin);
     if (!admin) {
-      return res.status(400).json({
+      return res.json({
         message: "Admin not found",
         success: false,
       });
     }
     // check if password is correct
-    const isMatchPassword = await bcrypt.compare(password, admin.hashedPassword);
+    const isMatchPassword = await bcrypt.compare(
+      password,
+      admin.hashedPassword
+    );
     if (!isMatchPassword) {
-      return res.status(400).json({
+      return res.json({
         message: "Invalid credentials",
         success: false,
       });
     }
     // generate token
     const token = adminToken(admin);
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+    });
     res.json({
       message: "Signed in successfully!",
       success: true,
       user: admin,
+      token: token,
     });
     console.log("token : ", token);
   } catch (error) {
@@ -112,18 +119,48 @@ export const signin = async (req, res) => {
   }
 };
 
-
 //! logout
 
-export const logout = async (req, res) => {
-    try {
-      res.clearCookie("token"); // 'token' is the name of the cookie where the JWT is stored
-      res.status(200).json({ message: "Logged out successfully" ,success : true});
-    } catch (error) {
-      console.log(error, "Something wrong");
-      res.status(500).json({
-        err: "Internal Server Error",
+export const logout =  (req, res) => {
+  try {
+     res.clearCookie("token");
+    // res.clearCookie('token', {
+    //     httpOnly: true,
+    //   })
+    res.json({ message: "Logged out successfully", success: true });
+  } catch (error) {
+    console.log(error, "Something wrong");
+    res.status(500).json({
+      err: "Internal Server Error",
+      success: false,
+    });
+  }
+};
+
+//! Admin profile
+
+export const adminProfile = async (req, res) => {
+  try {
+    console.log("Hitted");
+    const userId = req.user.data;
+    if (!userId) {
+      return res.status(401).json({
+        err: "Not authorized",
         success: false,
       });
     }
-  };
+    const user = await Admin.findById(userId);
+    console.log(user);
+    res.status(200).json({
+      message: "Admin profile",
+      user : user,
+      success: true,
+    });
+  } catch (error) {
+    console.log(error, "Something wrong");
+    res.status(500).json({
+      err: "Internal Server Error",
+      success: false,
+    });
+  }
+};

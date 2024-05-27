@@ -18,6 +18,12 @@ const orderSchema = new mongoose.Schema(
       type: String,
       enum: ["Pending", "Completed", "Failed"],
       required: true,
+      default: "Pending",
+    },
+    totalQuantity :{
+      type: Number,
+      required: true,
+      default : 0,
     },
     // paymentMethod: { type: String, required: true },
     orderStatus: {
@@ -30,7 +36,7 @@ const orderSchema = new mongoose.Schema(
       city: { type: String, required: true },
       state: { type: String, required: true },
       postalCode: { type: String, required: true },
-      country: { type: String, required: true },
+      //country: { type: String, required: true },
     },
   },
   { timestamps: true }

@@ -72,6 +72,7 @@ export const signup = async (req, res) => {
       message: "Signed successfully!",
       success: true,
       user: newUser,
+      token : token
     });
     console.log("token : ", token);
   } catch (error) {
@@ -133,6 +134,7 @@ export const signin = async (req, res) => {
       success: true,
       token: token,
       user: user,
+
     });
     console.log("token : ", token);
   } catch (error) {
@@ -265,6 +267,34 @@ export const logout = async (req, res) => {
   try {
     res.clearCookie("token"); // 'token' is the name of the cookie where the JWT is stored
     res.status(200).json({ message: "Logged out successfully" ,success : true});
+  } catch (error) {
+    console.log(error, "Something wrong");
+    res.status(500).json({
+      err: "Internal Server Error",
+      success: false,
+    });
+  }
+};
+
+
+
+//! user profile
+
+export const userProfile = async (req, res) => {
+  try {
+    const userId = req.user.data;
+    if(!userId) {
+      return res.status(401).json({
+        err: "Not authorized",
+        success: false,
+        });
+    }
+    const user = await User.findById(userId);
+    console.log(user);
+    res.status(200).json({
+      user,
+      success: true,
+      });
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).json({
