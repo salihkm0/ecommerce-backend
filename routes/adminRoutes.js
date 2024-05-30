@@ -8,7 +8,7 @@ const adminRouter = express.Router()
 
 adminRouter.post("/signup" , signup)
 adminRouter.post("/signin" , signin)
-adminRouter.get('/logout',logout)
+adminRouter.post('/logout',logout)
 adminRouter.get("/all-users", authenticateAdmin,getAllUsers)
 adminRouter.get("/profile",authenticateAdmin, adminProfile)
 export default adminRouter

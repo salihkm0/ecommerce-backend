@@ -69,7 +69,7 @@ sellerRouter.delete(
   authenticateSeller,
   deleteSubCategory
 );
-sellerRouter.delete(
+sellerRouter.get(
   "/sub-category/all",
   authenticateSeller,
   getAllSubCategories

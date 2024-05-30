@@ -121,13 +121,12 @@ export const signin = async (req, res) => {
 
 //! logout
 
-export const logout =  (req, res) => {
+export const logout = (req, res) => {
   try {
-     res.clearCookie("token");
-    // res.clearCookie('token', {
-    //     httpOnly: true,
-    //   })
-    res.json({ message: "Logged out successfully", success: true });
+    res.clearCookie("token", {
+      httpOnly: true,
+    });
+    res.status(200).json({ message: "Logged out successfully", success: true });
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).json({
@@ -153,7 +152,7 @@ export const adminProfile = async (req, res) => {
     console.log(user);
     res.status(200).json({
       message: "Admin profile",
-      user : user,
+      user: user,
       success: true,
     });
   } catch (error) {
