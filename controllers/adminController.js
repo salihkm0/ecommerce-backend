@@ -1,6 +1,9 @@
 import bcrypt from "bcrypt";
 import Admin from "../models/adminModel.js";
 import { adminToken } from "../utils/adminToken.js";
+import dotenv from "dotenv"
+
+dotenv.config()
 
 //! admin signup
 export const signup = async (req, res) => {
@@ -100,8 +103,16 @@ export const signin = async (req, res) => {
     }
     // generate token
     const token = adminToken(admin);
-    res.cookie("token", token, {
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    // });
+    res.cookie('token', token, {
       httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'None',
+      path: '/',
+      domain: process.env.COOKIE_DOMAIN || 'localhost',
+      // maxAge: 24* 60 * 60 * 1000,
     });
     res.json({
       message: "Signed in successfully!",
@@ -123,7 +134,14 @@ export const signin = async (req, res) => {
 
 export const logout = (req, res) => {
   try {
-    res.clearCookie("token");
+    // res.clearCookie("token");
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'None',
+      path: '/',
+      domain: process.env.COOKIE_DOMAIN || 'localhost',
+    });
     res.status(200).json({ message: "Logged out successfully", success: true });
     console.log("Logged out successfully");
   } catch (error) {

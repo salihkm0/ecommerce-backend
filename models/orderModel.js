@@ -20,12 +20,24 @@ const orderSchema = new mongoose.Schema(
       required: true,
       default: "Pending",
     },
-    totalQuantity :{
+    totalQuantity: {
       type: Number,
       required: true,
-      default : 0,
+      default: 0,
     },
-    // paymentMethod: { type: String, required: true },
+    totalTax: {
+      type: Number,
+      default: 0,
+    },
+    totalDiscount: {
+      type: Number,
+      default: 0,
+    },
+    paymentMethod: { 
+      type: String,
+      required: true,
+      enum: ["razorpay", "cod"],
+    },
     orderStatus: {
       type: String,
       enum: ["Processing", "Shipped", "Delivered", "Cancelled"],

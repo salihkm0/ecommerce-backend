@@ -7,8 +7,8 @@ import preventAuthenticatedAccess from "../middlewares/authMiddleware.js";
 
 const adminRouter = express.Router()
 
-adminRouter.post("/signup" ,preventAuthenticatedAccess, signup)
-adminRouter.post("/signin" ,preventAuthenticatedAccess, signin)
+adminRouter.post("/register", signup)
+adminRouter.post("/signin" , signin)
 adminRouter.post('/logout',logout)
 adminRouter.get("/all-users", authenticateAdmin,getAllUsers)
 adminRouter.get("/profile",authenticateAdmin, adminProfile)

@@ -251,6 +251,7 @@ export const updateUser = async (req, res) => {
 export const checkUser = async (req, res) => {
   try {
     const user = req.user;
+    console.log("Req.User : ",user );
     if(!user){
       return res.json({message : "User not Found",success : false})
     }
@@ -269,7 +270,8 @@ export const checkUser = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    res.clearCookie("token"); // 'token' is the name of the cookie where the JWT is stored
+    // res.clearCookie("token" ); // 'token' is the name of the cookie where the JWT is stored
+    res.cookie("token", "");
     res.status(200).json({ message: "Logged out successfully" ,success : true});
   } catch (error) {
     console.log(error, "Something wrong");

@@ -14,7 +14,7 @@ import {
   getSingleCoupon,
   updateCoupon,
 } from "../controllers/couponController.js";
-import { addProduct, getAllProducts } from "../controllers/productController.js";
+import { addProduct, deleteProduct, getAllProducts, getProductById, updateProduct } from "../controllers/productController.js";
 import {
   addSubCategory,
   deleteSubCategory,
@@ -85,6 +85,15 @@ sellerRouter.delete("/coupon/delete/:id", authenticateSeller, deleteCoupon);
 
 sellerRouter.post("/product/add" ,authenticateSeller,addProduct)
 sellerRouter.get("/product/all" ,authenticateSeller,getAllProducts)
+sellerRouter.delete("/product/delete/:id" ,authenticateSeller,deleteProduct)
+sellerRouter.put("/product/update/:id" ,authenticateSeller,updateProduct)
+sellerRouter.get("/product/:id" ,authenticateSeller,getProductById)
+
+
+
+
+
+
 
 
 export default sellerRouter;

@@ -113,7 +113,7 @@ export const deleteProduct = async (req, res) => {
     }
     return res
       .status(200)
-      .json({ message: "Product deleted successfully", success: true });
+      .json({ message: "Product deleted successfully", success: true ,product});
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).json({
@@ -143,7 +143,7 @@ export const updateProduct = async (req, res) => {
     }
     return res
       .status(200)
-      .json({ message: "Product updated successfully", success: true });
+      .json({ message: "Product updated successfully", success: true ,product});
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).json({
