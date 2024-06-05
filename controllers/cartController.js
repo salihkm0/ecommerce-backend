@@ -27,7 +27,7 @@ export const addToCart = async (req, res) => {
         },
       ],
       totalPrice: product.price * quantity,
-      totalQuantity: quantity,
+      totalQuantity: totalQuantity + quantity,
     });
     await newCart.save();
     res.status(201).json({ message: "Product added to cart", success: true });

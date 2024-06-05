@@ -2,6 +2,7 @@ import  express from "express";
 import { addToCart, checkout, deleteCart, deleteCartProduct, getCart, updateCart } from "../controllers/cartController.js";
 import { checkUser, getAllUsers, getUser, logout, signin, signup, updateUser, userProfile } from "../controllers/userController.js";
 import authenticateAdmin from "../middlewares/adminMiddleware.js";
+import preventAuthenticatedAccess from "../middlewares/authMiddleware.js";
 import authenticateUser from "../middlewares/userMiddleware.js";
 
 const userRouter = express.Router();
@@ -19,5 +20,8 @@ userRouter.post('/update-cart',authenticateUser, updateCart)
 userRouter.delete('/delete-cart',authenticateUser, deleteCart)
 userRouter.delete('/delete-cart-product/:id',authenticateUser, deleteCartProduct)
 userRouter.post('/checkout',authenticateUser, checkout)
+
+
+userRouter.get('/check-user',preventAuthenticatedAccess, checkUser)
 
 export default userRouter;

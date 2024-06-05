@@ -251,6 +251,10 @@ export const updateUser = async (req, res) => {
 export const checkUser = async (req, res) => {
   try {
     const user = req.user;
+    if(!user){
+      return res.json({message : "User not Found",success : false})
+    }
+    res.json({message : "User Found",success : true , user})
     console.log(user);
   } catch (error) {
     console.log(error, "Something wrong");

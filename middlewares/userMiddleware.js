@@ -16,7 +16,6 @@ function authenticateUser(req, res, next) {
 
   jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
     console.log(err);
-
     if (err) return res.sendStatus(403);
     req.user = user;
     console.log(req.user.role);
