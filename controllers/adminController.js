@@ -123,10 +123,9 @@ export const signin = async (req, res) => {
 
 export const logout = (req, res) => {
   try {
-    res.clearCookie("token", {
-      httpOnly: true,
-    });
+    res.clearCookie("token");
     res.status(200).json({ message: "Logged out successfully", success: true });
+    console.log("Logged out successfully");
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).json({
