@@ -6,7 +6,7 @@ import {
   getAllCategories,
   getCategoryById,
   updateCategory,
-} from "../controllers/categoryController.js";
+} from "../controllers/subCategoryController.js";
 import {
   addCoupon,
   deleteCoupon,
@@ -20,7 +20,7 @@ import {
   deleteSubCategory,
   getAllSubCategories,
   updateSubCategory,
-} from "../controllers/subCategoryController.js";
+} from "../controllers/subSubCategoryController.js";
 import authenticateSeller from "../middlewares/sellerMiddleware.js";
 import upload from "../middlewares/uploadMiddleware.js";
 

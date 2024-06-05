@@ -7,7 +7,7 @@ import slug from "mongoose-slug-generator";
 //   truncate: 120,
 // };
 
-mongoose.plugin(slug);
+// mongoose.plugin(slug);
 
 const sizeSchema = new mongoose.Schema({
   size: { type: String, required: true },
@@ -91,11 +91,11 @@ const productSchema = new mongoose.Schema(
     },
     subCategory: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      ref: "SubCategory",
     },
     subSubCategory: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "SubCategory",
+      ref: "SubSubCategory",
     },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
