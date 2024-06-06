@@ -3,11 +3,12 @@ import { logout, signup ,signin, adminProfile} from "../controllers/adminControl
 import { getAllUsers } from "../controllers/userController.js";
 import authenticateAdmin from "../middlewares/adminMiddleware.js";
 import preventAuthenticatedAccess from "../middlewares/authMiddleware.js";
+import upload from "../middlewares/uploadMiddleware.js";
 
 
 const adminRouter = express.Router()
 
-adminRouter.post("/register", signup)
+adminRouter.post("/register",upload.single("image"), signup)
 adminRouter.post("/signin" , signin)
 adminRouter.post('/logout',logout)
 adminRouter.get("/all-users", authenticateAdmin,getAllUsers)

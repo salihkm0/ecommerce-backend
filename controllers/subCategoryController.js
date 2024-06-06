@@ -2,7 +2,7 @@ import { cloudinaryInstance } from "../config/cloudinary.js";
 import SubCategory from "../models/subCategoryModel.js";
 
 
-// add category
+//! add category
 export const addNewCategory = (req, res) => {
   console.log("Add New Category Hitted");
 
@@ -57,7 +57,7 @@ export const addNewCategory = (req, res) => {
   }
 };
 
-// get all categories
+//! get all categories
 export const getAllCategories = async (req, res) => {
   console.log("Get All Category Hitted");
   try {
@@ -81,7 +81,7 @@ export const getAllCategories = async (req, res) => {
     });
   }
 };
-// get category by id
+//! get category by id
 export const getCategoryById = async (req, res) => {
   console.log("Get Category Hitted");
   try {
@@ -105,7 +105,7 @@ export const getCategoryById = async (req, res) => {
     });
   }
 };
-// update category
+//! update category
 export const updateCategory = async (req, res) => {
   console.log("Update Category Hitted");
   try {
@@ -131,7 +131,7 @@ export const updateCategory = async (req, res) => {
     });
   }
 };
-// delete category
+//! delete category
 export const deleteCategory = async (req, res) => {
   console.log("Delete Category Hitted");
   try {

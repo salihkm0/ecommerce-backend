@@ -36,7 +36,7 @@ const productSchema = new mongoose.Schema(
       slug: "title",
       unique: true,
     },
-    imageUrl: [String],
+    imageUrls: [String],
     // imageKey: {
     //   type: String,
     // },

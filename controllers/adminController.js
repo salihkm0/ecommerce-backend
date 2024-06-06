@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import Admin from "../models/adminModel.js";
 import { adminToken } from "../utils/adminToken.js";
 import dotenv from "dotenv"
+import { cloudinaryInstance } from "../config/cloudinary.js";
 
 dotenv.config()
 
@@ -9,6 +10,18 @@ dotenv.config()
 export const signup = async (req, res) => {
   console.log("Admin signup hitted");
   try {
+    if (!req.file) {
+      return res.send("file is not visible");
+    }
+    cloudinaryInstance.uploader.upload(req.file.path, async (err, result) => {
+      if (err) {
+        console.log(err, "error");
+        return res.status(500).json({
+          success: false,
+          message: "Error",
+        });
+      }
+      const imageUrl = result.url;
     const { firstName, lastName, email, password } = req.body;
 
     //check admin is already exist
@@ -31,6 +44,7 @@ export const signup = async (req, res) => {
       firstName,
       lastName,
       hashedPassword,
+      imageUrl : imageUrl
     });
 
     // save the new admin
@@ -60,6 +74,7 @@ export const signup = async (req, res) => {
     console.log("token : ", token, {
       httpOnly: true,
     });
+  })
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).json({

@@ -8,6 +8,7 @@ const adminSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     hashedPassword: { type: String, required: true, min: 6 },
     role: { type: String, default: "admin", enum: "admin" },
+    imageUrl: { type: String },
   },
   { timestamps: true }
 );

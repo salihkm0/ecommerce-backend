@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const wishlistSchema = new mongoose.Schema(
   {
     product: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
       default: null,
     },
     user: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       default: null,
     },

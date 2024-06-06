@@ -1,7 +1,7 @@
 import Product from "../models/productModel";
 import Review from "../models/reviewModel";
 
-// add review
+// !add review
 export const addReview = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -30,7 +30,7 @@ export const addReview = async (req, res) => {
   }
 };
 
-//delete
+//!delete
 export const deleteReview = async (req, res) => {
   try {
     const deleteReview = await Review.findByIdAndDelete(req.params.id);
@@ -45,7 +45,7 @@ export const deleteReview = async (req, res) => {
   }
 };
 
-// update
+//! update
 export const updateReview = async (req, res) => {
   try {
     const updateReview = await Review.findByIdAndUpdate(
@@ -67,7 +67,7 @@ export const updateReview = async (req, res) => {
   }
 };
 
-//get review
+//!get review
 export const getReview = async (req, res) => {
   try {
     const review = await Review.find();
@@ -82,7 +82,7 @@ export const getReview = async (req, res) => {
   }
 };
 
-// get review by product
+//! get review by product
 export const getReviewByProduct = async (req, res) => {
   try {
     const review = await Review.find({ product: req.params.id });

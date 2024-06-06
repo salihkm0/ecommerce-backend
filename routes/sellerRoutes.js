@@ -83,7 +83,7 @@ sellerRouter.get("/coupon/all", authenticateSeller, getAllCoupons);
 sellerRouter.get("/coupon", authenticateSeller, getSingleCoupon);
 sellerRouter.delete("/coupon/delete/:id", authenticateSeller, deleteCoupon);
 
-sellerRouter.post("/product/add" ,authenticateSeller,addProduct)
+sellerRouter.post("/product/add" ,authenticateSeller,upload.array('images', 10),addProduct)
 sellerRouter.get("/product/all" ,authenticateSeller,getAllProducts)
 sellerRouter.delete("/product/delete/:id" ,authenticateSeller,deleteProduct)
 sellerRouter.put("/product/update/:id" ,authenticateSeller,updateProduct)

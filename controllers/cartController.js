@@ -156,7 +156,7 @@ export const getCart = async (req, res) => {
   }
 };
 
-// update cart
+//! update cart
 export const updateCart = async (req, res) => {
   try {
     const { id, quantity } = req.body;
@@ -191,7 +191,7 @@ export const updateCart = async (req, res) => {
   }
 };
 
-// delete cart
+//! delete cart
 export const deleteCart = async (req, res) => {
   try {
     const cart = await Cart.findOneAndDelete({ user: req.user.data });
@@ -209,7 +209,7 @@ export const deleteCart = async (req, res) => {
   }
 };
 
-// delete Cart Product
+//! delete Cart Product
 export const deleteCartProduct = async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: req.user.data });
@@ -242,7 +242,7 @@ export const deleteCartProduct = async (req, res) => {
   }
 };
 
-// checkout
+//! checkout
 export const checkout = async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: req.user.data });

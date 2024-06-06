@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { cloudinaryInstance } from "../config/cloudinary.js";
 import User from "../models/userModel.js";
 import { userToken } from "../utils/generateToken.js";
 
@@ -7,74 +8,90 @@ import { userToken } from "../utils/generateToken.js";
 export const signup = async (req, res) => {
   console.log("Sign Up Hitted");
   try {
-    const {
-      email,
-      password,
-      firstName,
-      lastName,
-      phoneNumber,
-      street,
-      city,
-      district,
-      state,
-      zip,
-    } = req.body;
-
-    // Check user is already exist
-    const userExist = await User.findOne({ email });
-    if (userExist) {
-      return res.json({
-        message: "User is already exist",
-        success: false,
-      });
+    console.log("image : ", req.file);
+    if (!req.file) {
+      return res.send("file is not visible");
     }
 
-    // hashing password
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-    // create new user
-
-    const newUser = new User({
-      email,
-      firstName,
-      lastName,
-      phoneNumber,
-      address: {
+    cloudinaryInstance.uploader.upload(req.file.path, async (err, result) => {
+      if (err) {
+        console.log(err, "error");
+        return res.status(500).json({
+          success: false,
+          message: "Error",
+        });
+      }
+      const imageUrl = result.url;
+      const {
+        email,
+        password,
+        firstName,
+        lastName,
+        phoneNumber,
         street,
         city,
         district,
         state,
         zip,
-      },
-      hashedPassword,
-    });
+      } = req.body;
 
-    // save the new user
+      // Check user is already exist
+      const userExist = await User.findOne({ email });
+      if (userExist) {
+        return res.json({
+          message: "User is already exist",
+          success: false,
+        });
+      }
 
-    const newUserCreated = await newUser.save();
+      // hashing password
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    //check the user is saved
+      // create new user
 
-    if (!newUserCreated) {
-      return res.json({
-        message: "user is not created",
-        success: false,
+      const newUser = new User({
+        email,
+        firstName,
+        lastName,
+        phoneNumber,
+        address: {
+          street,
+          city,
+          district,
+          state,
+          zip,
+        },
+        hashedPassword,
+        imageUrl : imageUrl
       });
-    }
 
-    // generate token
-    const token = userToken(newUserCreated);
+      // save the new user
 
-    //save token in cookie
-    res.cookie("token", token);
-    res.json({
-      message: "Signed successfully!",
-      success: true,
-      user: newUser,
-      token : token
+      const newUserCreated = await newUser.save();
+
+      //check the user is saved
+
+      if (!newUserCreated) {
+        return res.json({
+          message: "user is not created",
+          success: false,
+        });
+      }
+
+      // generate token
+      const token = userToken(newUserCreated);
+
+      //save token in cookie
+      res.cookie("token", token);
+      res.json({
+        message: "Signed successfully!",
+        success: true,
+        user: newUser,
+        token: token,
+      });
+      console.log("token : ", token);
     });
-    console.log("token : ", token);
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).json({
@@ -134,7 +151,6 @@ export const signin = async (req, res) => {
       success: true,
       token: token,
       user: user,
-
     });
     console.log("token : ", token);
   } catch (error) {
@@ -251,11 +267,11 @@ export const updateUser = async (req, res) => {
 export const checkUser = async (req, res) => {
   try {
     const user = req.user;
-    console.log("Req.User : ",user );
-    if(!user){
-      return res.json({message : "User not Found",success : false})
+    console.log("Req.User : ", user);
+    if (!user) {
+      return res.json({ message: "User not Found", success: false });
     }
-    res.json({message : "User Found",success : true , user})
+    res.json({ message: "User Found", success: true, user });
     console.log(user);
   } catch (error) {
     console.log(error, "Something wrong");
@@ -272,7 +288,7 @@ export const logout = async (req, res) => {
   try {
     // res.clearCookie("token" ); // 'token' is the name of the cookie where the JWT is stored
     res.cookie("token", "");
-    res.status(200).json({ message: "Logged out successfully" ,success : true});
+    res.status(200).json({ message: "Logged out successfully", success: true });
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).json({
@@ -282,25 +298,23 @@ export const logout = async (req, res) => {
   }
 };
 
-
-
 //! user profile
 
 export const userProfile = async (req, res) => {
   try {
     const userId = req.user.data;
-    if(!userId) {
+    if (!userId) {
       return res.status(401).json({
         err: "Not authorized",
         success: false,
-        });
+      });
     }
     const user = await User.findById(userId);
     console.log(user);
     res.status(200).json({
       user,
       success: true,
-      });
+    });
   } catch (error) {
     console.log(error, "Something wrong");
     res.status(500).json({
