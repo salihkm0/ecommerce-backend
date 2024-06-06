@@ -1,5 +1,5 @@
-import Product from "../models/productModel";
-import Review from "../models/reviewModel";
+import Product from "../models/productModel.js";
+import Review from "../models/reviewModel.js";
 
 // !add review
 export const addReview = async (req, res) => {
@@ -67,8 +67,8 @@ export const updateReview = async (req, res) => {
   }
 };
 
-//!get review
-export const getReview = async (req, res) => {
+//!get all review
+export const getAllReview = async (req, res) => {
   try {
     const review = await Review.find();
     if (!review) {
@@ -81,6 +81,25 @@ export const getReview = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+//! get user review 
+
+export const getUserReviews = async (req, res) => {
+  try {
+    const userId = req.user.data
+    const review = await Review.findOne({user : userId});
+    if (!review) {
+      return res
+        .status(400)
+        .json({ message: "Review not found", success: false });
+    }
+    res.status(200).json({ message: "Review found", success: true, review });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+
 
 //! get review by product
 export const getReviewByProduct = async (req, res) => {
@@ -96,3 +115,5 @@ export const getReviewByProduct = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+

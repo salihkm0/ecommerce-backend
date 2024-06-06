@@ -23,6 +23,7 @@ import {
 } from "../controllers/subSubCategoryController.js";
 import authenticateSeller from "../middlewares/sellerMiddleware.js";
 import upload from "../middlewares/uploadMiddleware.js";
+import { getAllReview, getReviewByProduct } from "../controllers/reviewController.js";
 
 const sellerRouter = express.Router();
 // brand
@@ -89,6 +90,8 @@ sellerRouter.delete("/product/delete/:id" ,authenticateSeller,deleteProduct)
 sellerRouter.put("/product/update/:id" ,authenticateSeller,updateProduct)
 sellerRouter.get("/product/:id" ,authenticateSeller,getProductById)
 
+sellerRouter.get("/reviews", authenticateSeller, getAllReview);
+sellerRouter.get("/product/reviews/:id", authenticateSeller, getReviewByProduct);
 
 
 
