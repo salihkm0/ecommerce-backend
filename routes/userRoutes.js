@@ -1,5 +1,5 @@
 import  express from "express";
-import { addAddress, getUserAddress } from "../controllers/addressController.js";
+import { addAddress, getUserAddress, updateAddress } from "../controllers/addressController.js";
 import { addToCart, checkout, deleteCart, deleteCartProduct, getCart, updateCart } from "../controllers/cartController.js";
 import { getAllOrders } from "../controllers/orderController.js";
 import { checkUser, getAllUsers, getUser, logout, signin, signup, updateUser, userProfile } from "../controllers/userController.js";
@@ -15,8 +15,11 @@ userRouter.get("/get-user",authenticateUser, getUser)
 userRouter.put("/update-user/:id",authenticateUser , updateUser)
 userRouter.get("/profile",authenticateUser, userProfile)
 userRouter.post('/logout',logout)
+
+
 userRouter.post('/address/add',authenticateUser,addAddress)
 userRouter.get('/address',authenticateUser,getUserAddress)
+userRouter.put('/address/update/:addressId',authenticateUser,updateAddress)
 
 
 

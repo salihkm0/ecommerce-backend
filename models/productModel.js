@@ -36,11 +36,7 @@ const productSchema = new mongoose.Schema(
       slug: "title",
       unique: true,
     },
-    // imageUrl: [
-    //   {
-    //     type: String,
-    //   },
-    // ],
+    imageUrl: [String],
     // imageKey: {
     //   type: String,
     // },
@@ -63,7 +59,6 @@ const productSchema = new mongoose.Schema(
         type: String,
         enum: ["percentage", "amount"],
         default: "percentage",
-
       },
       value: Number,
     },
@@ -84,10 +79,10 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
     category: {
-    //   type: mainCategory,
-    type : String,
+      //   type: mainCategory,
+      type: String,
       required: true,
-      enum : ["men" ,'women','kids']
+      enum: ["men", "women", "kids"],
     },
     subCategory: {
       type: mongoose.Schema.Types.ObjectId,

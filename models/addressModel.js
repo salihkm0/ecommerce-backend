@@ -9,6 +9,7 @@ const addressSchema = new mongoose.Schema({
   state: { type: String, required: true },
   postalCode: { type: Number, required: true },
   country: { type: String, default: "India" },
+  isPrimary : {type : Boolean , default : false}
 });
 
 const addressesSchema = new mongoose.Schema(
